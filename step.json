@@ -1,0 +1,10 @@
+{
+    "done": false,
+    "info": "",
+    "observation": [
+      0,
+      0
+    ],
+    "reward": -0.001,
+    "truncated": false
+  
