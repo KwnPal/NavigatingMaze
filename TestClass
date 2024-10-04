@@ -1,0 +1,7 @@
+from environment import Env
+
+url="http://3.77.211.177:5005"
+env1=Env(url)
+env1.resetEnv()
+done, info, observation, reward, truncated=env1.step(1)
+print("done: ",done,"| info: ",info,"| observation: ",observation,"| reward: ",reward,"| truncated:",truncated)

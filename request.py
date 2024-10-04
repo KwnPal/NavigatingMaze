@@ -1,13 +1,11 @@
 import requests
 import json 
 
-
-
 # Checking status code
 URL = "http://3.77.211.177:5005/"
-ng=URL +"new_game"
+ng= URL +"new_game" 
 reset=URL +"reset/"
-response = requests.post(URL +"new_game")
+response = requests.post(ng)
 
 with open('data.json', 'w') as json_file:
     json.dump(response.json(), json_file, indent=1)
