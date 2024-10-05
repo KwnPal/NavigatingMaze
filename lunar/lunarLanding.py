@@ -8,7 +8,7 @@ from stable_baselines3.common.evaluation import evaluate_policy
 env = gym.make("LunarLander-v2")
 
 # Instantiate the agent
-model = DQN("MlpPolicy",env, verbose=1)
+model = DQN("MlpPolicy",env,tensorboard_log="/tmp/sac/", verbose=0)
 # Train the agent and display a progress bar
 model.learn(total_timesteps=int(200000), progress_bar=True)
 # Save the agent

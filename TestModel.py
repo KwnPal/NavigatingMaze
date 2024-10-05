@@ -2,10 +2,12 @@ import gymnasium as gym
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.evaluation import evaluate_policy
+from envGymWrapper import GymEnvWrapper
 
+url="http://3.77.211.177:5005"
+env= GymEnvWrapper(url)
 
-env = gym.make("LunarLander-v2", render_mode="human")
-model = DQN.load("dqn_lunar2", env=env)
+model = DQN.load("DQN", env=env)
 vec_env = model.get_env()
 obs = vec_env.reset()
 for i in range(10000):
