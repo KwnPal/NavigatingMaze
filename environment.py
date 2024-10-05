@@ -3,7 +3,6 @@ import json
 import numpy as np
 
 class Env:
-
     def __init__(self,url):
         self.url=url
         self.uuid = None
@@ -40,9 +39,8 @@ class Env:
             observation = np.array(response.json()["observation"],dtype=np.float32)
             reward = response.json()["reward"]
             truncated = response.json()["truncated"]
-
             return observation,reward,done,truncated,info
-        except requests.exceptions.RequestException:
+        except requests.exceptions.RequestException as e:
             print("An error occurred: \n",response.status_code) 
             observation = np.zeros((2,), dtype=np.float32)  # Default observation (2D space as per your env)
             reward = -1.0  

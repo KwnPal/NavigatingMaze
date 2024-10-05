@@ -20,7 +20,6 @@ class GymEnvWrapper(gym.Env):
     def step(self,action):
         observation,reward,done,truncated,info = self.APIEnv.step(action)
         # self.printMaze(observation)
-        print(reward)
         return observation,reward,done,truncated,info
     
     def render(self, mode='human'):

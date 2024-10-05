@@ -10,15 +10,15 @@ from stable_baselines3 import PPO
 def main():
     url="http://3.77.211.177:5005"
 
-    # env = GymEnvWrapper(url)
+    env = GymEnvWrapper(url)
     
     #check_env(env,warn=True)
     
-    num_envs = 4  # Number of parallel environments
+    num_envs = 8  # Number of parallel environments
     env = SubprocVecEnv([make_env(url) for _ in range(num_envs)])
 
 
-    model = DQN("MlpPolicy",env,verbose=1)
+    model = DQN("MlpPolicy",env,verbose=2,batch_size= 100)
     model.learn(total_timesteps=25000,progress_bar=True)
     model.save("DQN")
 

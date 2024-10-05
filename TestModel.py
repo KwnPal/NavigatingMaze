@@ -5,11 +5,16 @@ from stable_baselines3.common.evaluation import evaluate_policy
 from envGymWrapper import GymEnvWrapper
 
 url="http://3.77.211.177:5005"
-env= GymEnvWrapper(url)
+env = GymEnvWrapper(url)
 
 model = DQN.load("DQN", env=env)
-vec_env = model.get_env()
-obs = vec_env.reset()
-for i in range(10000):
-    action, _states = model.predict(obs, deterministic=True)
-    obs, rewards, dones, info = vec_env.step(action)
+obs , info =env.reset()
+episode_reward= 0.0
+for _ in range(1000):
+    action, _ = model.predict(obs)
+    obs, reward, terminated, truncated, info = env.step(action)
+    episode_reward += reward
+    if terminated or truncated or reward==100:
+        print("Reward:", episode_reward, "Success?"," True" if reward == 100 else "False")
+        episode_reward = 0.0
+        obs, info = env.reset()
