@@ -28,6 +28,7 @@ class Env:
         else:
             print("Error Code ",response.status_code)
             print(response.text)
+            
 
     def step(self,action):
         body = {"action" : action}
