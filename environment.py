@@ -23,24 +23,32 @@ class Env:
 
     def resetEnv(self):
         response = requests.post(self.url+"/reset/"+self.uuid)
-        if response.status_code == 200:
+        try:
             data = np.array(response.json()["observation"],dtype=np.float32)
+            print("I RESET")
             return data
-        else:
+        except requests.exceptions.RequestException:
             print("Error Code ",response.status_code)
             print(response.text)
             
     def step(self,action):
         body = {"action" : int(action)}
         try:
-            response = requests.post(self.url+"/step/"+self.uuid , body)
+            response = requests.post(self.url+"/step/"+self.uuid, json=body)
             done = response.json()["done"]
             info = response.json()["info"]
             observation = np.array(response.json()["observation"],dtype=np.float32)
             reward = response.json()["reward"]
             truncated = response.json()["truncated"]
+
             return observation,reward,done,truncated,info
-        except requests.exceptions.RequestException as e:
-            print("An error occurred:",e) 
-            return observation,reward,done,truncated,info
+        except requests.exceptions.RequestException:
+            print("An error occurred: \n",response.status_code) 
+            observation = np.zeros((2,), dtype=np.float32)  # Default observation (2D space as per your env)
+            reward = -1.0  
+            done = True  
+            truncated = False 
+            info = {"error": str(e)}
+
+            return observation, reward, done, truncated, info
             
