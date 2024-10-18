@@ -1,0 +1,7 @@
+# Python used 3.9.5
+requests==2.32.3
+stable-baselines3==2.3.2
+gymnasium==0.29.1
+tqdm==4.66.5
+tensorboard==2.18.0
+pygame==2.6.1

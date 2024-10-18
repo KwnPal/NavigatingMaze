@@ -9,7 +9,7 @@ class maze:
         self.height = height
 
     def print_maze(self):
-        # os.system("cls")
+        #os.system("cls")
         print("-" + self.width * "---")
         for i in self.maze:
             formatted_row = [f'{str(cell):>2}' for cell in i]

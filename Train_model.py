@@ -10,16 +10,17 @@ from Create_maze import Maze_generator
 
 def main():
     dim=5
-    maze_generator = Maze_generator(dim,dim)
-    #check_env(env,warn=True)# Check if the env is corret according to gym standards
+    maze_generator = Maze_generator(dim,dim,1)
+    env = GymEnvWrapper(maze_generator)
+    check_env(env,warn=True)# Check if the env is corret according to gym standards
     
-    num_envs = 4  # Number of parallel environments
-    env = SubprocVecEnv([make_env(maze_generator) for _ in range(num_envs)])
-    
+    # num_envs = 1  # Number of parallel envir onments
+    # env = SubprocVecEnv([make_env(maze_generator) for _ in range(num_envs)])
 
-    model = PPO("MlpPolicy",env,verbose=1, tensorboard_log="./ppo_tensorboard/")
-    model.learn(total_timesteps=5000000, progress_bar=True)
-    model.save("PPO")
+    
+    model = DQN("MlpPolicy",env, verbose = 2, tensorboard_log="./dqn_tensorboard/")
+    model.learn(total_timesteps=350000, progress_bar=True)
+    model.save("DQN")
 
 def make_env(maze_generator):
     def _init():

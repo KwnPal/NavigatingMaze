@@ -2,20 +2,25 @@ import numpy as np
 from stable_baselines3 import DQN, PPO
 from stable_baselines3.common.evaluation import evaluate_policy
 from env_gym_wrapper import GymEnvWrapper
-
+from Create_maze import Maze_generator
+from tqdm import tqdm
+import time
+# 0-->left 1-->right 2->down 3 -->up 
 url="http://3.77.211.177:5005"
-env = GymEnvWrapper(url)
+dim=5
+maze_generator = Maze_generator(dim,dim,2)
+env = GymEnvWrapper(maze_generator)
 
-model = PPO.load("PPO", env=env)
+model = PPO.load("PPO")
 obs , info =env.reset()
 
-episodes=1 # The number of all the episodes
+episodes=100 # The number of all the episodes
 rewardAllEp = [] # A list containing the sum of rewards of each episode
 stepsList = [] # A list containing the steps of every episode
 epReward= 0.0 # The sum of rewards
 goalAchieved = 0 # If the agent found the exit in the maze
 steps=0
-for episode in range(episodes):
+for episode in tqdm(range(episodes), desc = "Episodes completed"):
     obs,info = env.reset()
     epReward = 0.0
     steps=0
@@ -23,8 +28,12 @@ for episode in range(episodes):
 
     while not done:
         action, _ = model.predict(obs)
-        obs, reward, terminated, truncated, info = env.step(action)
+        obs, reward, terminated, truncated, info = env.step(int(action))
+        # print("New Obs: ",obs," action: ",action)
+        # env.print_agent()
         steps += 1
+        if steps == 100:
+            truncated = True
         epReward += reward
         done = terminated or truncated
 

@@ -9,6 +9,7 @@ class GymEnvWrapper(gym.Env):
         super().__init__()
         #self.Env=Env_API(url)# if API is used
         self.Env = Env_local(Maze_generator)
+        self.id = self.Env.env_id
         self.action_space = Discrete(4)
         self.observation_space = Box(low = self.Env.low, high = self.Env.high, shape = (2,), dtype=np.float32)
         self.reset()
@@ -23,3 +24,5 @@ class GymEnvWrapper(gym.Env):
         observation,reward,done,truncated,info = self.Env.step(action)
         return observation,reward,done,truncated,info
         
+    def print_agent(self):
+        self.Env.print_agent()

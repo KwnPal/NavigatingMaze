@@ -4,9 +4,11 @@ from environment_local import Env_local
 
 
 def main():
-    dim=3
-    maze_generator = Maze_generator(dim,dim,4)
+    dim=5
+    maze_generator = Maze_generator(dim,dim,33)
+
     env = Env_local(maze_generator)
+    env.maze.print_maze()
     # env.maze.print_maze()
     # os.system("cls")
     # env.reset()
@@ -24,10 +26,7 @@ def main():
     # env.step(1)
     # env.step(2)
     # env.step(2)
-    env.step(1)
-    env.step(1)
-    env.reset()
-    env.step(2)
+   
 
 
 
