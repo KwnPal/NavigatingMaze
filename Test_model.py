@@ -6,12 +6,13 @@ from Create_maze import Maze_generator
 from tqdm import tqdm
 import time
 # 0-->left 1-->right 2->down 3 -->up 
-url="http://3.77.211.177:5005"
+#url="http://3.77.211.177:5005"
+load_path = "models\\"
 dim=5
-maze_generator = Maze_generator(dim,dim,2)
+maze_generator = Maze_generator(dim,dim)
 env = GymEnvWrapper(maze_generator)
 
-model = PPO.load("PPO")
+model = DQN.load(load_path+"DQN_random")
 obs , info =env.reset()
 
 episodes=100 # The number of all the episodes
@@ -32,8 +33,8 @@ for episode in tqdm(range(episodes), desc = "Episodes completed"):
         # print("New Obs: ",obs," action: ",action)
         # env.print_agent()
         steps += 1
-        if steps == 100:
-            truncated = True
+        # if steps == 100:
+        #     truncated = True
         epReward += reward
         done = terminated or truncated
 
