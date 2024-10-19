@@ -2,13 +2,16 @@ import numpy as np
 import copy
 from Agent import agent
 from Create_maze import Maze_generator
+import random
 import time
 
 class Env_local:
+    env_id = 0
     def __init__(self, Maze_generator):
+        Env_local.env_id +=1
+        self.id = Env_local.env_id
         self.maze_gen = Maze_generator
         self.maze = self.maze_gen.generate_maze_dfs()
-        self.env_id = Maze_generator.maze_id
         self.agent = agent(self.maze)
         self.createEnv()
 
@@ -19,13 +22,15 @@ class Env_local:
               }
         self.high = np.array(obs["high"])
         self.low = obs["low"]
-        print("New env created \nEnv id: ", self.env_id)
+        print("New env created \nEnv id: ", self.id)
 
     def reset(self):
         self.agent.agent_position = [0,0]
         observation = np.array(self.agent.agent_position, dtype = np.float32)
+        if self.maze_gen.seed is None:
+            seed = random.randint(0, 99999999) 
+            self.maze_gen.set_seed(seed)
         self.maze = self.maze_gen.generate_maze_dfs()
-        print("RESET")
         return observation 
 
             

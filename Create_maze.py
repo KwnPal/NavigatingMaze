@@ -63,7 +63,6 @@ class Maze_generator:
         grid[self.height-1][self.width-1] = "E"
 
         self.maze_id += 1
-
         maze_instance = maze(self.width,self.height, self.maze_id, grid)
 
         return maze_instance
@@ -71,3 +70,6 @@ class Maze_generator:
     def change_dim(self, width, height):
         self.width=width
         self.height=height
+
+    def set_seed(self,seed):
+        self.seed = seed

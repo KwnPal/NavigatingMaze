@@ -12,10 +12,10 @@ dim=5
 maze_generator = Maze_generator(dim,dim)
 env = GymEnvWrapper(maze_generator)
 
-model = DQN.load(load_path+"DQN_random")
+model = DQN.load(load_path+"DQN_new")
 obs , info =env.reset()
 
-episodes=100 # The number of all the episodes
+episodes=100000 # The number of all the episodes
 rewardAllEp = [] # A list containing the sum of rewards of each episode
 stepsList = [] # A list containing the steps of every episode
 epReward= 0.0 # The sum of rewards
@@ -33,8 +33,8 @@ for episode in tqdm(range(episodes), desc = "Episodes completed"):
         # print("New Obs: ",obs," action: ",action)
         # env.print_agent()
         steps += 1
-        # if steps == 100:
-        #     truncated = True
+        if steps == 1000:
+            truncated = True
         epReward += reward
         done = terminated or truncated
 
